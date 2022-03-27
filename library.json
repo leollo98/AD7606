@@ -15,7 +15,7 @@
       "type": "git",
       "url": "https://github.com/leollo98/AD7606"
     },
-    "version": "0.1.1",
+    "version": "0.1.2",
     "license": "MIT",
     "frameworks": "Arduino",
     "platforms": "*",

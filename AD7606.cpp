@@ -115,7 +115,7 @@ void AD7606_Serial::read(int16_t *rawDataBuffer)
 
 	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
 
-	while (_BUSY)
+	while (digitalRead(_BUSY))
 	{
 		//  wait for conversions to be completed (low level on BUSY)
 	}
@@ -143,7 +143,7 @@ void AD7606_8080::read(int16_t *rawDataBuffer)
 
 	digitalWrite(_CS, 0);
 
-	while (_BUSY)
+	while (digitalRead(_BUSY))
 	{
 		//  wait for conversions to be completed (low level on BUSY)
 	}
@@ -174,7 +174,7 @@ void AD7606_16::read(int16_t *rawDataBuffer)
 
 	digitalWrite(_CS, 0);
 
-	while (_BUSY)
+	while (digitalRead(_BUSY))
 	{
 		//  wait for conversions to be completed (low level on BUSY)
 	}
