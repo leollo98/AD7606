@@ -13,10 +13,14 @@
 #define RD 21
 #define RESET 22
 #define BUSY 23
+#define OS0 2
+#define OS1 4
+#define OS2 5
+#define RANGE 13
 
 int DB0_DB7[] = {DB0, DB1, DB2, DB3, DB4, DB5, DB6, DB7};
 
-AD7606_8080 AD(DB0_DB7, RD, CS, CVA_CVB, CVA_CVB, BUSY, RESET);
+AD7606_8080 AD(DB0_DB7, RD, CS, CVA_CVB, CVA_CVB, BUSY, RESET, OS0, OS1, OS2, RANGE);
 
 void setup()
 {
@@ -26,8 +30,8 @@ void setup()
 void loop()
 {
 	int16_t Data[8];
-	AD.read(Data, 6); // dont read 7 and 8 channel, or read all 6 channels of AD7606-6
-	for (uint8_t i = 0; i < 6; i++)
+	AD.read(Data);
+	for (uint8_t i = 0; i < 8; i++)
 	{
 		Serial.println(Data[i]);
 	}

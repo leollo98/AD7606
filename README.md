@@ -44,9 +44,7 @@ The total time is based on this LHL with the folowing requirementes to read all 
 ### reading less channels
 
 Reading the ADC is very straightforward, the **read()** function handles all in one call.
-But if you want to read less channels, like in the case of AD7606-6 or AD7606-4,
-or just 2 channels in serial or 1 on 8080 or 16 modes, you can use the **read()** function with 2 arguments,
-one for the data vector and 1 for the number o channels.
+But if you want to read less channels, like in the case of AD7606-6 or AD7606-4, or just 2 channels in serial or 1 on 8080 or 16 modes, you can use the **read()** function with 2 arguments, one for the data vector and 1 for the number o channels.
 In serial mode 1 channel give back channels 1 and 5, because they are read simultaneously.
 In 8080 or 16 modes, the channels are retrive in order, so if you want to read the 6 channel, is necessary to read all previous channels.
 
@@ -61,9 +59,8 @@ To set the IC in the correct mode is necessary to change the polarity on 2 pins
 | Serial          |   1          |  0   |
 | Parallel 8080   |   1          |  1   |
   
-In the chinesse development board, you have 2 places for resistors, R1 and R2, marked with SP1 and 8080.
-To set the mode to serial or parallel 8080 is necessary to put the resistor in the SP1 pads,
-and use de DB15 to set between the 2 modes.
+In the chinese development board, you have 2 places for resistors, R1 and R2, marked with SP1 and 8080.
+To set the mode to serial or parallel 8080 is necessary to put the resistor in the SP1 pads, and use de DB15 to set between the 2 modes.
 To set the Parallel 16 mode just leave the resistor in the 8080 pads.
 
 
@@ -71,12 +68,9 @@ To set the Parallel 16 mode just leave the resistor in the 8080 pads.
 
 This IC have 2 different Voltage inputs, the AVcc (+5V) to supply power and the Vdrive (Vio) to communications.
 If you have a 5V compatible microcontroller, you can set both to 5V.
-If you have a 3.3V compatible microcontroller, you can set AVcc to 5V and Vdrive to 3.3V,
-so all comunication will be 3.3V.
-The limits are 4.75V to 5.25V in the AVcc, and 2.3V to 5.25V in the Vdrive,
-but with lower Vdrive voltages the IC became slower,
-the total time with Vdrive between 3.3V to 5.25V is 5µs, with Vdrive equal to 2.7V the total time is 9.7µs,
-and with 2.3V the total time is 10.7µs
+If you have a 3.3V compatible microcontroller, you can set AVcc to 5V and Vdrive to 3.3V, so all comunication will be 3.3V.
+The limits are 4.75V to 5.25V in the AVcc, and 2.3V to 5.25V in the Vdrive, but with lower Vdrive voltages the IC became slower.
+The total time with Vdrive between 3.3V to 5.25V is 5µs, with Vdrive equal to 2.7V the total time is 9.7µs, and with 2.3V the total time is 10.7µs
 
 
 

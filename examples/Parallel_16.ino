@@ -1,6 +1,5 @@
 #include "AD7606.cpp"
 
-
 #define DB0 16
 #define DB1 17
 #define DB2 25
@@ -23,25 +22,21 @@
 #define RESET 22
 #define BUSY 23
 
-int DB0_DB15[] = {DB0,DB1,DB2,DB3,DB4,DB5,DB6,DB7,DB8,DB9,DB10,DB11,DB12,DB13,DB14,DB15};
+int DB0_DB15[] = {DB0, DB1, DB2, DB3, DB4, DB5, DB6, DB7, DB8, DB9, DB10, DB11, DB12, DB13, DB14, DB15};
 
-AD7606_16 AD(DB0_DB15,RD,CS,CVA_CVB,CVA_CVB,BUSY,RESET);
+AD7606_16 AD(DB0_DB15, RD, CS, CVA_CVB, CVA_CVB, BUSY, RESET);
 
-void setup(){
-    Serial.begin(115200);
-    pinMode(CVA_CVB, OUTPUT);
-	pinMode(CS, OUTPUT);
-	pinMode(RD, OUTPUT);
-	pinMode(RESET, OUTPUT);
-}
-
-void loop() 
+void setup()
 {
-    int16_t Data[8];
-    AD.read(Data);
-    for (uint8_t i = 0; i < 8; i++)
-    {
-        Serial.println(Data[i]);
-    }
+	Serial.begin(115200);
 }
 
+void loop()
+{
+	int16_t Data[8];
+	AD.read(Data);
+	for (uint8_t i = 0; i < 8; i++)
+	{
+		Serial.println(Data[i]);
+	}
+}
