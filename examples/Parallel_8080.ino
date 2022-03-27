@@ -21,6 +21,10 @@ AD7606_8080 AD(DB0_DB7,RD,CS,CVA_CVB,CVA_CVB,BUSY,RESET);
 
 void setup(){
     Serial.begin(115200);
+    pinMode(CVA_CVB, OUTPUT);
+	pinMode(CS, OUTPUT);
+	pinMode(RD, OUTPUT);
+	pinMode(RESET, OUTPUT);
 }
 
 void loop() 
