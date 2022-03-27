@@ -122,13 +122,11 @@ void AD7606_Serial::read(int16_t *rawDataBuffer)
 
 	for (uint8_t k = 0; k < 4; k++)
 	{
-		for (uint8_t i = 0; i < 16; i++)
+		for (int8_t i = 15; i >= 0; i--)
 		{
-			ipulse(_RD);
-			value1 << 1;
-			value2 << 1;
-			value1 += digitalRead(_DB7);
-			value2 += digitalRead(_DB8);
+			pulse(_RD);
+			value1 += digitalRead(_DB7) << i;
+			value2 += digitalRead(_DB8) << i;
 		}
 		*(rawDataBuffer + k) = value1;
 		*(rawDataBuffer + 4 + k) = value2;
