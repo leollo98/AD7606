@@ -1,6 +1,6 @@
 {
     "name": "AD7606",
-    "keywords": "AD7606, ADC",
+    "keywords": "AD7606, AD7606-6, AD7606-4, ADC, Serial, Parallel",
     "description": "Arduino library for AD7606 - Parallel/Serial 16 bit ADC",
     "authors":
     [
@@ -15,7 +15,7 @@
       "type": "git",
       "url": "https://github.com/leollo98/AD7606"
     },
-    "version": "0.2.0",
+    "version": "0.3.0",
     "license": "MIT",
     "frameworks": "Arduino",
     "platforms": "*",
