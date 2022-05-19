@@ -22,7 +22,5 @@ jobs:
       - name: arduino/arduino-lint-action
         uses: arduino/arduino-lint-action@v1.0.1
         with:
-          # Path containing Arduino projects.
-          path: .
-          # Show more information on the checks being run.
+          library-manager: update
           verbose: true
