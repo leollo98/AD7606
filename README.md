@@ -45,8 +45,8 @@ The total time is based on this LHL with the folowing requirementes to read all 
 
 Reading the ADC is very straightforward, the **read()** function handles all in one call.
 But if you want to read less channels, like in the case of AD7606-6 or AD7606-4, or just 2 channels in serial or 1 on 8080 or 16 modes, you can use the **read()** function with 2 arguments, one for the data vector and 1 for the number o channels.
-In serial mode 1 channel give back channels 1 and 5, because they are read simultaneously.
-In 8080 or 16 modes, the channels are retrive in order, so if you want to read the 6 channel, is necessary to read all previous channels.
+In serial mode each data retrival give back 2 channels, 1 and 5, 2 and 6 ... because they are read simultaneously.
+In 8080 or 16 modes, the channels are retrive in order, so if you want to read the 6º channel, is necessary to read all previous channels.
 
 
 

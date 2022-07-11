@@ -227,6 +227,35 @@ void AD7606_Serial::read(int16_t *rawDataBuffer,uint8_t times)
 	}
 	digitalWrite(_CS, 1);
 }
+int16_t * AD7606_Serial::readAndReturn()
+{
+	int16_t rawDataBuffer[8];
+	uint16_t value1 = 0;
+	uint16_t value2 = 0;
+
+	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
+
+	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
+
+	while (digitalRead(_BUSY))
+	{
+		//  wait for conversions to be completed (low level on BUSY)
+	}
+
+	for (uint8_t k = 0; k < 4; k++)
+	{
+		for (int8_t i = 15; i >= 0; i--)
+		{
+			pulse(_RD);
+			value1 += digitalRead(_DB7) << i;
+			value2 += digitalRead(_DB8) << i;
+		}
+		rawDataBuffer[k] = value1;
+		rawDataBuffer[4+k] = value2;
+	}
+	digitalWrite(_CS, 1);
+	return rawDataBuffer;
+}
 
 // Constructor for parallel byte comunication
 AD7606_8080::AD7606_8080(int D0_D7[8], int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
@@ -427,6 +456,39 @@ void AD7606_8080::read(int16_t *rawDataBuffer,uint8_t times)
 	}
 	digitalWrite(_CS, 1);
 }
+int16_t * AD7606_8080::readAndReturn()
+{
+	int16_t rawDataBuffer[8];
+	uint16_t value1 = 0;
+
+	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
+
+	digitalWrite(_CS, 0);
+
+	while (digitalRead(_BUSY))
+	{
+		//  wait for conversions to be completed (low level on BUSY)
+	}
+
+	for (uint8_t k = 0; k < 8; k++)
+	{
+		for (uint8_t i = 0; i < 2; i++)
+		{
+			ipulse(_RD);
+			for (uint8_t j = 15; j >= 8; j++)
+			{
+				value1 += digitalRead(_D0_D7[j - 8]) << j;
+			}
+			for (uint8_t j = 7; j >= 0; j++)
+			{
+				value1 += digitalRead(_D0_D7[j]) << j;
+			}
+		}
+		rawDataBuffer[k] = value1;
+	}
+	digitalWrite(_CS, 1);
+	return rawDataBuffer;
+}
 
 // Constructor for parallel comunication
 AD7606_16::AD7606_16(int D0_D15[16], int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
@@ -618,6 +680,35 @@ void AD7606_16::read(int16_t *rawDataBuffer,uint8_t times)
 		*(rawDataBuffer + k) = value1;
 	}
 	digitalWrite(_CS, 1);
+}
+int16_t * AD7606_16::read()
+{
+	int16_t rawDataBuffer[8];
+	uint16_t value1 = 0;
+
+	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
+
+	digitalWrite(_CS, 0);
+
+	while (digitalRead(_BUSY))
+	{
+		//  wait for conversions to be completed (low level on BUSY)
+	}
+
+	for (uint8_t k = 0; k < 8; k++)
+	{
+		for (uint8_t i = 0; i < 2; i++)
+		{
+			ipulse(_RD);
+			for (uint8_t j = 15; j >= 0; j++)
+			{
+				value1 += digitalRead(_D0_D7[j]) << j;
+			}
+		}
+		rawDataBuffer[k] = value1;
+	}
+	digitalWrite(_CS, 1);
+	return rawDataBuffer;
 }
 
 
