@@ -1,4 +1,18 @@
 #include "AD7606.h"
+#include <SPI.h>
+
+#if CONFIG_IDF_TARGET_ESP32S2 || CONFIG_IDF_TARGET_ESP32S3
+	#define VSPI FSPI
+#endif
+
+#if CONFIG_IDF_TARGET_ESP32*
+	#define spiClk = 40000000; //40Mhz
+#else
+	#define spiClk = 20000000; //20Mhz
+#endif
+
+
+SPIClass * vspi = NULL;
 
 // Resets the AD7606
 void AD7606::reset()
@@ -53,11 +67,11 @@ void AD7606::setOversampling(uint8_t times){
 
 void AD7606::setRange(bool range){
 	pinMode(_RANGE,OUTPUT);
-	digitalWrite(_RANGE,range);
+	digitalWrite(_RANGE,range);yml
 }
 
-// Constructor for serial comunicatio
-AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
+// Constructor for emulated SPI comunication
+AD7606_Serial::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
 {
 	_RESET = RESET;
 	pinMode(_RESET,OUTPUT);
@@ -68,9 +82,7 @@ AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int 
 	_CONVSTB = CONVSTB;
 	pinMode(_CONVSTB,OUTPUT);
 	_DB7 = DB7;
-	pinMode(_DB7,OUTPUT);
 	_DB8 = DB8;
-	pinMode(_DB8,OUTPUT);
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
@@ -81,7 +93,8 @@ AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int 
 	digitalWrite(_RESET, 0);
 	reset();
 };
-AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int RANGE)
+
+AD7606_Serial::AD7606_ESPI(int DB7, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
 {
 	_RESET = RESET;
 	pinMode(_RESET,OUTPUT);
@@ -92,9 +105,28 @@ AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int 
 	_CONVSTB = CONVSTB;
 	pinMode(_CONVSTB,OUTPUT);
 	_DB7 = DB7;
-	pinMode(_DB7,OUTPUT);
+	_RD = RD;
+	pinMode(_RD,OUTPUT);
+	_BUSY = BUSY;
+	pinMode(_BUSY,OUTPUT);
+	digitalWrite(_CS, 0);
+	digitalWrite(_CONVSTA, 0);
+	digitalWrite(_CONVSTB, 0);
+	digitalWrite(_RESET, 0);
+	reset();
+};
+AD7606_Serial::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int RANGE)
+{
+	_RESET = RESET;
+	pinMode(_RESET,OUTPUT);
+	_CS = CS;
+	pinMode(_CS,OUTPUT);
+	_CONVSTA = CONVSTA;
+	pinMode(_CONVSTA,OUTPUT);
+	_CONVSTB = CONVSTB;
+	pinMode(_CONVSTB,OUTPUT);
+	_DB7 = DB7;
 	_DB8 = DB8;
-	pinMode(_DB8,OUTPUT);
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
@@ -107,7 +139,7 @@ AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int 
 	digitalWrite(_RESET, 0);
 	reset();
 };
-AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2)
+AD7606_Serial::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2)
 {
 	_RESET = RESET;
 	pinMode(_RESET,OUTPUT);
@@ -118,9 +150,7 @@ AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int 
 	_CONVSTB = CONVSTB;
 	pinMode(_CONVSTB,OUTPUT);
 	_DB7 = DB7;
-	pinMode(_DB7,OUTPUT);
 	_DB8 = DB8;
-	pinMode(_DB8,OUTPUT);
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
@@ -137,7 +167,7 @@ AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int 
 	digitalWrite(_RESET, 0);
 	reset();
 };
-AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2,int RANGE)
+AD7606_Serial::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2,int RANGE)
 {
 	_RESET = RESET;
 	pinMode(_RESET,OUTPUT);
@@ -148,9 +178,7 @@ AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int 
 	_CONVSTB = CONVSTB;
 	pinMode(_CONVSTB,OUTPUT);
 	_DB7 = DB7;
-	pinMode(_DB7,OUTPUT);
 	_DB8 = DB8;
-	pinMode(_DB8,OUTPUT);
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
@@ -176,10 +204,11 @@ void AD7606_Serial::read(int16_t *rawDataBuffer)
 {
 	uint16_t value1 = 0;
 	uint16_t value2 = 0;
+	
+	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
 
 	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
 
-	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
 
 	while (digitalRead(_BUSY))
 	{
@@ -204,10 +233,10 @@ void AD7606_Serial::read(int16_t *rawDataBuffer,uint8_t times)
 	times > 4 ? times = 4 : times;
 	uint16_t value1 = 0;
 	uint16_t value2 = 0;
+	
+	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
 
 	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
-
-	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
 
 	while (digitalRead(_BUSY))
 	{
@@ -232,10 +261,10 @@ int16_t * AD7606_Serial::readAndReturn()
 	int16_t rawDataBuffer[8];
 	uint16_t value1 = 0;
 	uint16_t value2 = 0;
+	
+	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
 
 	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
-
-	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
 
 	while (digitalRead(_BUSY))
 	{
@@ -304,7 +333,6 @@ AD7606_8080::AD7606_8080(int D0_D7[8], int RD, int CS, int CONVSTA, int CONVSTB,
 	for (uint8_t i = 0; i < 8; i++)
 	{
 		_D0_D7[i] = D0_D7[i];
-		pinMode(_D0_D7[i],OUTPUT);
 	}
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
@@ -335,7 +363,6 @@ AD7606_8080::AD7606_8080(int D0_D7[8], int RD, int CS, int CONVSTA, int CONVSTB,
 	for (uint8_t i = 0; i < 8; i++)
 	{
 		_D0_D7[i] = D0_D7[i];
-		pinMode(_D0_D7[i],OUTPUT);
 	}
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
@@ -370,7 +397,6 @@ AD7606_8080::AD7606_8080(int D0_D7[8], int RD, int CS, int CONVSTA, int CONVSTB,
 	for (uint8_t i = 0; i < 8; i++)
 	{
 		_D0_D7[i] = D0_D7[i];
-		pinMode(_D0_D7[i],OUTPUT);
 	}
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
@@ -396,10 +422,10 @@ AD7606_8080::AD7606_8080(int D0_D7[8], int RD, int CS, int CONVSTA, int CONVSTB,
 void AD7606_8080::read(int16_t *rawDataBuffer)
 {
 	uint16_t value1 = 0;
+	
+	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
 
 	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
-
-	digitalWrite(_CS, 0);
 
 	while (digitalRead(_BUSY))
 	{
@@ -429,9 +455,9 @@ void AD7606_8080::read(int16_t *rawDataBuffer,uint8_t times)
 	times > 8 ? times = 8 : times;
 	uint16_t value1 = 0;
 
+	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
+	
 	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
-
-	digitalWrite(_CS, 0);
 
 	while (digitalRead(_BUSY))
 	{
@@ -460,10 +486,10 @@ int16_t * AD7606_8080::readAndReturn()
 {
 	int16_t rawDataBuffer[8];
 	uint16_t value1 = 0;
+	
+	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
 
 	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
-
-	digitalWrite(_CS, 0);
 
 	while (digitalRead(_BUSY))
 	{
@@ -508,7 +534,6 @@ AD7606_16::AD7606_16(int D0_D15[16], int RD, int CS, int CONVSTA, int CONVSTB, i
 	for (uint8_t i = 0; i < 8; i++)
 	{
 		_D0_D15[i] = D0_D15[i];
-		pinMode(_D0_D15[i],OUTPUT);
 	}
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
@@ -537,7 +562,6 @@ AD7606_16::AD7606_16(int D0_D15[16], int RD, int CS, int CONVSTA, int CONVSTB, i
 	for (uint8_t i = 0; i < 8; i++)
 	{
 		_D0_D15[i] = D0_D15[i];
-		pinMode(_D0_D15[i],OUTPUT);
 	}
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
@@ -568,7 +592,6 @@ AD7606_16::AD7606_16(int D0_D15[16], int RD, int CS, int CONVSTA, int CONVSTB, i
 	for (uint8_t i = 0; i < 8; i++)
 	{
 		_D0_D15[i] = D0_D15[i];
-		pinMode(_D0_D15[i],OUTPUT);
 	}
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
@@ -603,7 +626,6 @@ AD7606_16::AD7606_16(int D0_D15[16], int RD, int CS, int CONVSTA, int CONVSTB, i
 	for (uint8_t i = 0; i < 8; i++)
 	{
 		_D0_D15[i] = D0_D15[i];
-		pinMode(_D0_D15[i],OUTPUT);
 	}
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
@@ -629,10 +651,10 @@ AD7606_16::AD7606_16(int D0_D15[16], int RD, int CS, int CONVSTA, int CONVSTB, i
 void AD7606_16::read(int16_t *rawDataBuffer)
 {
 	uint16_t value1 = 0;
+	
+	digitalWrite(_CS, 0);
 
 	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
-
-	digitalWrite(_CS, 0);
 
 	while (digitalRead(_BUSY))
 	{
@@ -657,10 +679,10 @@ void AD7606_16::read(int16_t *rawDataBuffer,uint8_t times)
 {
 	times > 8 ? times = 8 : times;
 	uint16_t value1 = 0;
+	
+	digitalWrite(_CS, 0);
 
 	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
-
-	digitalWrite(_CS, 0);
 
 	while (digitalRead(_BUSY))
 	{
@@ -685,10 +707,10 @@ int16_t * AD7606_16::read()
 {
 	int16_t rawDataBuffer[8];
 	uint16_t value1 = 0;
+	
+	digitalWrite(_CS, 0);
 
 	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
-
-	digitalWrite(_CS, 0);
 
 	while (digitalRead(_BUSY))
 	{
@@ -712,4 +734,82 @@ int16_t * AD7606_16::read()
 }
 
 
+AD7606_Serial::AD7606_SPI(int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
+{
+	_RESET = RESET;
+	pinMode(_RESET,OUTPUT);
+	_CS = CS;
+	pinMode(_CS,OUTPUT);
+	_CONVSTA = CONVSTA;
+	pinMode(_CONVSTA,OUTPUT);
+	_CONVSTB = CONVSTB;
+	pinMode(_CONVSTB,OUTPUT);
+	_BUSY = BUSY;
+	digitalWrite(_CS, 0);
+	digitalWrite(_CONVSTA, 0);
+	digitalWrite(_CONVSTB, 0);
+	digitalWrite(_RESET, 0);
+	vspi = new SPIClass(VSPI);
+	vspi->begin();
+	vspi.beginTransaction(SPISettings(spiClk, MSBFIRST, SPI_MODE0)))
+	reset();
+};
 
+void AD7606_SPI::read(int16_t *rawDataBuffer)
+{
+	digitalWrite(_CS, 0);
+
+	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
+
+	while (digitalRead(_BUSY))
+	{
+		//  wait for conversions to be completed (low level on BUSY)
+	}
+
+	for (uint8_t k = 0; k < 8; k++)
+	{
+		rawDataBuffer[k] = SPI.transfer16(0x0000);
+	}
+	digitalWrite(_CS, 1);
+}
+void AD7606_SPI::read(int16_t *rawDataBuffer,uint8_t times)
+{	
+	digitalWrite(_CS, 0);
+
+	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
+	
+	times > 8 ? times = 8 : times; // save some uSecunds 
+
+	while (digitalRead(_BUSY))
+	{
+		//  wait for conversions to be completed (low level on BUSY)
+	}
+
+	for (uint8_t k = 0; k < times; k++)
+	{
+		rawDataBuffer[k] = SPI.transfer16(0x0000);
+	}
+	digitalWrite(_CS, 1);
+}
+
+
+int16_t * AD7606_SPI::read()
+{
+	int16_t rawDataBuffer[8];
+	
+	digitalWrite(_CS, 0);
+	
+	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
+
+	while (digitalRead(_BUSY))
+	{
+		//  wait for conversions to be completed (low level on BUSY)
+	}
+
+	for (uint8_t k = 0; k < 8; k++)
+	{
+		rawDataBuffer[k] = SPI.transfer16(0x0000);
+	}
+	digitalWrite(_CS, 1);
+	return rawDataBuffer;
+}
