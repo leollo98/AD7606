@@ -8,7 +8,7 @@
 #define RESET 22
 #define BUSY 23
 
-AD7606_Serial AD(DB7, DB8, RD, CS, CVA_CVB, CVA_CVB, BUSY, RESET);
+AD7606_ESPI AD(DB7, DB8, RD, CS, CVA_CVB, CVA_CVB, BUSY, RESET);
 
 void setup()
 {
