@@ -5,7 +5,7 @@
 	#define VSPI FSPI
 #endif
 
-#if CONFIG_IDF_TARGET_ESP32*
+#if CONFIG_IDF_TARGET_ESP32
 	#define spiClk = 40000000; //40Mhz
 #else
 	#define spiClk = SPI_CLOCK_DIV2; //8Mhz
