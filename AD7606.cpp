@@ -71,7 +71,7 @@ void AD7606::setRange(bool range){
 }
 
 // Constructor for emulated SPI comunication
-AD7606_Serial::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
+AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
 {
 	_RESET = RESET;
 	pinMode(_RESET,OUTPUT);
@@ -94,7 +94,7 @@ AD7606_Serial::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CO
 	reset();
 };
 
-AD7606_Serial::AD7606_ESPI(int DB7, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
+AD7606_ESPI::AD7606_ESPI(int DB7, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
 {
 	_RESET = RESET;
 	pinMode(_RESET,OUTPUT);
@@ -115,7 +115,7 @@ AD7606_Serial::AD7606_ESPI(int DB7, int RD, int CS, int CONVSTA, int CONVSTB, in
 	digitalWrite(_RESET, 0);
 	reset();
 };
-AD7606_Serial::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int RANGE)
+AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int RANGE)
 {
 	_RESET = RESET;
 	pinMode(_RESET,OUTPUT);
@@ -139,7 +139,7 @@ AD7606_Serial::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CO
 	digitalWrite(_RESET, 0);
 	reset();
 };
-AD7606_Serial::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2)
+AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2)
 {
 	_RESET = RESET;
 	pinMode(_RESET,OUTPUT);
@@ -167,7 +167,7 @@ AD7606_Serial::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CO
 	digitalWrite(_RESET, 0);
 	reset();
 };
-AD7606_Serial::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2,int RANGE)
+AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2,int RANGE)
 {
 	_RESET = RESET;
 	pinMode(_RESET,OUTPUT);
@@ -734,7 +734,7 @@ int16_t * AD7606_16::read()
 }
 
 
-AD7606_Serial::AD7606_SPI(int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
+AD7606_SPI::AD7606_SPI(int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
 {
 	_RESET = RESET;
 	pinMode(_RESET,OUTPUT);

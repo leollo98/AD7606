@@ -75,7 +75,7 @@ public:
 class AD7606_SPI : public AD7606
 {
 public:
-	AD7606_Serial::AD7606_SPI(int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET) // Constructor for SPI communication
+	AD7606_SPI::AD7606_SPI(int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET) // Constructor for SPI communication
 	void read(int16_t *);   // Read raw values from ADC
 	void read(int16_t *,uint8_t ); // Read raw values from ADC
 	int16_t * readAndReturn(); // Read raw values from ADC and return a array pointer
