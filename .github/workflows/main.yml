@@ -22,7 +22,7 @@ jobs:
         with:
           file: library.json
           field: version
-          value: ${{ github.run_number }}
+          value: 1.${{ github.run_number }}.0
 
       - name: platform IO publish
         uses: bojit/platformio-publish@main
