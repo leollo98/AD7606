@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ '*' ]
   pull_request:
-    branches: [ main ]
+    branches: [ '*' ]
 
 jobs:
   CI:
@@ -12,8 +12,21 @@ jobs:
     
     steps:
       - uses: actions/checkout@v3
-      - name: arduino/arduino-lint-action
+      - name: arduino lint action
         uses: arduino/arduino-lint-action@v1.0.1
         with:
           verbose: true
+      
+      - name: Update my-file.json description
+        uses: jossef/action-set-json-field@v2
+        with:
+          file: library.json
+          field: version
+          value: ${{ github.run_number }}
+
+      - name: platform IO publish
+        uses: bojit/platformio-publish@main
+        with:
+          token: ${{ secrets.PLATFORMIO_TOKEN }}
+        
 
