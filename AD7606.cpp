@@ -200,7 +200,7 @@ AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONV
 
 // Read raw values from all 8 channels
 // rawDataBuffer is a pointer to an array of 8 16-bit integers
-void AD7606_Serial::read(int16_t *rawDataBuffer)
+void AD7606_ESPI::read(int16_t *rawDataBuffer)
 {
 	uint16_t value1 = 0;
 	uint16_t value2 = 0;
@@ -228,7 +228,7 @@ void AD7606_Serial::read(int16_t *rawDataBuffer)
 	}
 	digitalWrite(_CS, 1);
 }
-void AD7606_Serial::read(int16_t *rawDataBuffer,uint8_t times)
+void AD7606_ESPI::read(int16_t *rawDataBuffer,uint8_t times)
 {
 	times > 4 ? times = 4 : times;
 	uint16_t value1 = 0;
@@ -256,7 +256,7 @@ void AD7606_Serial::read(int16_t *rawDataBuffer,uint8_t times)
 	}
 	digitalWrite(_CS, 1);
 }
-int16_t * AD7606_Serial::readAndReturn()
+int16_t * AD7606_ESPI::readAndReturn()
 {
 	int16_t rawDataBuffer[8];
 	uint16_t value1 = 0;
