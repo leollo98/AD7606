@@ -8,7 +8,7 @@
 #if CONFIG_IDF_TARGET_ESP32*
 	#define spiClk = 40000000; //40Mhz
 #else
-	#define spiClk = 20000000; //20Mhz
+	#define spiClk = SPI_CLOCK_DIV2; //8Mhz
 #endif
 
 
