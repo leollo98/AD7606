@@ -5,10 +5,10 @@
 	#define VSPI FSPI
 #endif
 
-#if CONFIG_IDF_TARGET_ESP32
-	#define spiClk = 40000000; //40Mhz
+#if CONFIG_IDF_TARGET_ESP32 || CONFIG_IDF_TARGET_ESP32S2 || CONFIG_IDF_TARGET_ESP32S3
+	#define spiClk 0x2000 //20Mhz
 #else
-	#define spiClk = SPI_CLOCK_DIV2; //8Mhz
+	#define spiClk SPI_CLOCK_DIV2 //8Mhz
 #endif
 
 
@@ -67,7 +67,7 @@ void AD7606::setOversampling(uint8_t times){
 
 void AD7606::setRange(bool range){
 	pinMode(_RANGE,OUTPUT);
-	digitalWrite(_RANGE,range);yml
+	digitalWrite(_RANGE,range);
 }
 
 // Constructor for emulated SPI comunication
@@ -83,28 +83,6 @@ AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONV
 	pinMode(_CONVSTB,OUTPUT);
 	_DB7 = DB7;
 	_DB8 = DB8;
-	_RD = RD;
-	pinMode(_RD,OUTPUT);
-	_BUSY = BUSY;
-	pinMode(_BUSY,OUTPUT);
-	digitalWrite(_CS, 0);
-	digitalWrite(_CONVSTA, 0);
-	digitalWrite(_CONVSTB, 0);
-	digitalWrite(_RESET, 0);
-	reset();
-};
-
-AD7606_ESPI::AD7606_ESPI(int DB7, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
-{
-	_RESET = RESET;
-	pinMode(_RESET,OUTPUT);
-	_CS = CS;
-	pinMode(_CS,OUTPUT);
-	_CONVSTA = CONVSTA;
-	pinMode(_CONVSTA,OUTPUT);
-	_CONVSTB = CONVSTB;
-	pinMode(_CONVSTB,OUTPUT);
-	_DB7 = DB7;
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
@@ -703,7 +681,7 @@ void AD7606_16::read(int16_t *rawDataBuffer,uint8_t times)
 	}
 	digitalWrite(_CS, 1);
 }
-int16_t * AD7606_16::read()
+int16_t * AD7606_16::readAndReturn()
 {
 	int16_t rawDataBuffer[8];
 	uint16_t value1 = 0;
@@ -749,9 +727,10 @@ AD7606_SPI::AD7606_SPI(int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
 	digitalWrite(_CONVSTA, 0);
 	digitalWrite(_CONVSTB, 0);
 	digitalWrite(_RESET, 0);
-	vspi = new SPIClass(VSPI);
-	vspi->begin();
-	vspi.beginTransaction(SPISettings(spiClk, MSBFIRST, SPI_MODE0)))
+	SPI.begin(SCK,MISO,MOSI,CS);
+  	SPI.setBitOrder(SPI_MSBFIRST);
+  	SPI.setClockDivider(0x2000);
+  	SPI.setDataMode(SPI_MODE0);
 	reset();
 };
 
@@ -793,7 +772,7 @@ void AD7606_SPI::read(int16_t *rawDataBuffer,uint8_t times)
 }
 
 
-int16_t * AD7606_SPI::read()
+int16_t * AD7606_SPI::readAndReturn()
 {
 	int16_t rawDataBuffer[8];
 	
