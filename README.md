@@ -20,8 +20,8 @@ This library should work for the devices mentioned below.
 To initialize the library you must call constructor as described below.
 
 - **AD7606_Serial( DB7, DB8, RD, CS, CONVSTA, CONVSTB, BUSY, RESET, OS0, OS1, OS2, RANGE)** Constructor for Serial comunication with all device ports, and optional Over Sampling and Range. 
-- **AD7606_8080( DB7, DB8, RD, CS, CONVSTA, CONVSTB, BUSY, RESET, OS0, OS1, OS2, RANGE)** Constructor for Parallel byte comunication with all device ports, and optional Over Sampling and Range. 
-- **AD7606_16( DB7, DB8, RD, CS, CONVSTA, CONVSTB, BUSY, RESET, OS0, OS1, OS2, RANGE)** Constructor for Parallel 2 bytes comunication with all device ports, and optional Over Sampling and Range. 
+- **AD7606_8080( DB0_DB7, RD, CS, CONVSTA, CONVSTB, BUSY, RESET, OS0, OS1, OS2, RANGE)** Constructor for Parallel byte comunication with all device ports, and optional Over Sampling and Range. 
+- **AD7606_16( DB0_DB15, RD, CS, CONVSTA, CONVSTB, BUSY, RESET, OS0, OS1, OS2, RANGE)** Constructor for Parallel 2 bytes comunication with all device ports, and optional Over Sampling and Range. 
 
 After construction the **setOversampling(x)** can be called with the number of samples in 2^x form, with limit of 6, or 64 samples.
 The function **setRange(bool)** can be used to set the limits to 5V (+/- 2.5V) with false or 10V (+/- 5V) with true.
