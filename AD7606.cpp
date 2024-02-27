@@ -91,6 +91,7 @@ AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONV
 	digitalWrite(_CONVSTA, 0);
 	digitalWrite(_CONVSTB, 0);
 	digitalWrite(_RESET, 0);
+	digitalWrite(_RD, 1);
 	reset();
 };
 AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int RANGE)
@@ -115,6 +116,7 @@ AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONV
 	digitalWrite(_CONVSTA, 0);
 	digitalWrite(_CONVSTB, 0);
 	digitalWrite(_RESET, 0);
+	digitalWrite(_RD, 1);
 	reset();
 };
 AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2)
@@ -143,6 +145,7 @@ AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONV
 	digitalWrite(_CONVSTA, 0);
 	digitalWrite(_CONVSTB, 0);
 	digitalWrite(_RESET, 0);
+	digitalWrite(_RD, 1);
 	reset();
 };
 AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2,int RANGE)
@@ -173,6 +176,127 @@ AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONV
 	digitalWrite(_CONVSTA, 0);
 	digitalWrite(_CONVSTB, 0);
 	digitalWrite(_RESET, 0);
+	digitalWrite(_RD, 1);
+	reset();
+};
+[[deprecated( Use AD7606_ESPI insted )]]
+AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
+{
+	_RESET = RESET;
+	pinMode(_RESET,OUTPUT);
+	_CS = CS;
+	pinMode(_CS,OUTPUT);
+	_CONVSTA = CONVSTA;
+	pinMode(_CONVSTA,OUTPUT);
+	_CONVSTB = CONVSTB;
+	pinMode(_CONVSTB,OUTPUT);
+	_DB7 = DB7;
+	pinMode(_DB7,OUTPUT);
+	_DB8 = DB8;
+	pinMode(_DB8,OUTPUT);
+	_RD = RD;
+	pinMode(_RD,OUTPUT);
+	_BUSY = BUSY;
+	pinMode(_BUSY,OUTPUT);
+	digitalWrite(_CS, 0);
+	digitalWrite(_CONVSTA, 0);
+	digitalWrite(_CONVSTB, 0);
+	digitalWrite(_RESET, 0);
+	digitalWrite(_RD, 1);
+	reset();
+};
+[[deprecated( Use AD7606_ESPI insted )]]
+AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int RANGE)
+{
+	_RESET = RESET;
+	pinMode(_RESET,OUTPUT);
+	_CS = CS;
+	pinMode(_CS,OUTPUT);
+	_CONVSTA = CONVSTA;
+	pinMode(_CONVSTA,OUTPUT);
+	_CONVSTB = CONVSTB;
+	pinMode(_CONVSTB,OUTPUT);
+	_DB7 = DB7;
+	pinMode(_DB7,OUTPUT);
+	_DB8 = DB8;
+	pinMode(_DB8,OUTPUT);
+	_RD = RD;
+	pinMode(_RD,OUTPUT);
+	_BUSY = BUSY;
+	pinMode(_BUSY,OUTPUT);
+	_RANGE = RANGE;
+	pinMode(_RANGE,OUTPUT);
+	digitalWrite(_CS, 0);
+	digitalWrite(_CONVSTA, 0);
+	digitalWrite(_CONVSTB, 0);
+	digitalWrite(_RESET, 0);
+	digitalWrite(_RD, 1);
+	reset();
+};
+[[deprecated( Use AD7606_ESPI insted )]]
+AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2)
+{
+	_RESET = RESET;
+	pinMode(_RESET,OUTPUT);
+	_CS = CS;
+	pinMode(_CS,OUTPUT);
+	_CONVSTA = CONVSTA;
+	pinMode(_CONVSTA,OUTPUT);
+	_CONVSTB = CONVSTB;
+	pinMode(_CONVSTB,OUTPUT);
+	_DB7 = DB7;
+	pinMode(_DB7,OUTPUT);
+	_DB8 = DB8;
+	pinMode(_DB8,OUTPUT);
+	_RD = RD;
+	pinMode(_RD,OUTPUT);
+	_BUSY = BUSY;
+	pinMode(_BUSY ,OUTPUT);
+	_OS0 = OS0;
+	pinMode(_OS0,OUTPUT);
+	_OS1 = OS1;
+	pinMode(_OS1,OUTPUT);
+	_OS2 = OS2;
+	pinMode(_OS2,OUTPUT);
+	digitalWrite(_CS, 0);
+	digitalWrite(_CONVSTA, 0);
+	digitalWrite(_CONVSTB, 0);
+	digitalWrite(_RESET, 0);
+	digitalWrite(_RD, 1);
+	reset();
+};
+[[deprecated( Use AD7606_ESPI insted )]]
+AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2,int RANGE)
+{
+	_RESET = RESET;
+	pinMode(_RESET,OUTPUT);
+	_CS = CS;
+	pinMode(_CS,OUTPUT);
+	_CONVSTA = CONVSTA;
+	pinMode(_CONVSTA,OUTPUT);
+	_CONVSTB = CONVSTB;
+	pinMode(_CONVSTB,OUTPUT);
+	_DB7 = DB7;
+	pinMode(_DB7,OUTPUT);
+	_DB8 = DB8;
+	pinMode(_DB8,OUTPUT);
+	_RD = RD;
+	pinMode(_RD,OUTPUT);
+	_BUSY = BUSY;
+	pinMode(_BUSY ,OUTPUT);
+	_OS0 = OS0;
+	pinMode(_OS0,OUTPUT);
+	_OS1 = OS1;
+	pinMode(_OS1,OUTPUT);
+	_OS2 = OS2;
+	pinMode(_OS2,OUTPUT);
+	_RANGE = RANGE;
+	pinMode(_RANGE,OUTPUT);
+	digitalWrite(_CS, 0);
+	digitalWrite(_CONVSTA, 0);
+	digitalWrite(_CONVSTB, 0);
+	digitalWrite(_RESET, 0);
+	digitalWrite(_RD, 1);
 	reset();
 };
 
@@ -197,7 +321,7 @@ void AD7606_ESPI::read(int16_t *rawDataBuffer)
 	{
 		for (int8_t i = 15; i >= 0; i--)
 		{
-			pulse(_RD);
+			ipulse(_RD);
 			value1 += digitalRead(_DB7) << i;
 			value2 += digitalRead(_DB8) << i;
 		}
@@ -225,7 +349,7 @@ void AD7606_ESPI::read(int16_t *rawDataBuffer,uint8_t times)
 	{
 		for (int8_t i = 15; i >= 0; i--)
 		{
-			pulse(_RD);
+			ipulse(_RD);
 			value1 += digitalRead(_DB7) << i;
 			value2 += digitalRead(_DB8) << i;
 		}
@@ -253,7 +377,7 @@ int16_t * AD7606_ESPI::readAndReturn()
 	{
 		for (int8_t i = 15; i >= 0; i--)
 		{
-			pulse(_RD);
+			ipulse(_RD);
 			value1 += digitalRead(_DB7) << i;
 			value2 += digitalRead(_DB8) << i;
 		}
@@ -262,6 +386,62 @@ int16_t * AD7606_ESPI::readAndReturn()
 	}
 	digitalWrite(_CS, 1);
 	return rawDataBuffer;
+}
+
+void AD7606_Serial::read(int16_t *rawDataBuffer)
+{
+	uint16_t value1 = 0;
+	uint16_t value2 = 0;
+
+	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
+
+	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
+
+	while (digitalRead(_BUSY))
+	{
+		//  wait for conversions to be completed (low level on BUSY)
+	}
+
+	for (uint8_t k = 0; k < 4; k++)
+	{
+		for (int8_t i = 15; i >= 0; i--)
+		{
+			ipulse(_RD);
+			value1 += digitalRead(_DB7) << i;
+			value2 += digitalRead(_DB8) << i;
+		}
+		*(rawDataBuffer + k) = value1;
+		*(rawDataBuffer + 4 + k) = value2;
+	}
+	digitalWrite(_CS, 1);
+}
+void AD7606_Serial::read(int16_t *rawDataBuffer,uint8_t times)
+{
+	times > 4 ? times = 4 : times;
+	uint16_t value1 = 0;
+	uint16_t value2 = 0;
+
+	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
+
+	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
+
+	while (digitalRead(_BUSY))
+	{
+		//  wait for conversions to be completed (low level on BUSY)
+	}
+
+	for (uint8_t k = 0; k < times; k++)
+	{
+		for (int8_t i = 15; i >= 0; i--)
+		{
+			ipulse(_RD);
+			value1 += digitalRead(_DB7) << i;
+			value2 += digitalRead(_DB8) << i;
+		}
+		*(rawDataBuffer + k) = value1;
+		*(rawDataBuffer + 4 + k) = value2;
+	}
+	digitalWrite(_CS, 1);
 }
 
 // Constructor for parallel byte comunication
@@ -712,7 +892,7 @@ int16_t * AD7606_16::readAndReturn()
 }
 
 
-AD7606_SPI::AD7606_SPI(int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
+AD7606_SPI::AD7606_SPI(int MISO, int SCK, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
 {
 	_RESET = RESET;
 	pinMode(_RESET,OUTPUT);
@@ -730,7 +910,7 @@ AD7606_SPI::AD7606_SPI(int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
 	SPI.begin(SCK,MISO,MOSI,CS);
   	SPI.setBitOrder(SPI_MSBFIRST);
   	SPI.setClockDivider(0x2000);
-  	SPI.setDataMode(SPI_MODE0);
+  	SPI.setDataMode(SPI_MODE3);
 	reset();
 };
 

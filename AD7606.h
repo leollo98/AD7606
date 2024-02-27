@@ -48,6 +48,17 @@ public:
 	int16_t * readAndReturn(); // Read raw values from ADC and return a array pointer
 };
 
+class AD7606_Serial : public AD7606
+{
+public:
+	AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET); // Constructor for serial communication
+	AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int RANGE); // Constructor for serial communication
+	AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2); // Constructor for serial communication
+	AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2,int RANGE); // Constructor for serial communication
+	void read(int16_t *);   // Read raw values from ADC
+	void read(int16_t *,uint8_t ); // Read raw values from ADC
+};
+
 class AD7606_8080 : public AD7606
 {
 public:
@@ -75,7 +86,7 @@ public:
 class AD7606_SPI : public AD7606
 {
 public:
-	AD7606_SPI(int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET); // Constructor for SPI communication
+	AD7606_SPI(int MISO, int SCK, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET); // Constructor for SPI communication
 	void read(int16_t *);   // Read raw values from ADC
 	void read(int16_t *,uint8_t ); // Read raw values from ADC
 	int16_t * readAndReturn(); // Read raw values from ADC and return a array pointer
