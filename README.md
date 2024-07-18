@@ -20,8 +20,8 @@ This library should work for the devices mentioned below.
 To initialize the library you must call constructor as described below.
 
 - **AD7606_Serial( DB7, DB8, RD, CS, CONVSTA, CONVSTB, BUSY, RESET, OS0, OS1, OS2, RANGE)** Constructor for Serial comunication with all device ports, and optional Over Sampling and Range. 
-- **AD7606_8080( DB7, DB8, RD, CS, CONVSTA, CONVSTB, BUSY, RESET, OS0, OS1, OS2, RANGE)** Constructor for Parallel byte comunication with all device ports, and optional Over Sampling and Range. 
-- **AD7606_16( DB7, DB8, RD, CS, CONVSTA, CONVSTB, BUSY, RESET, OS0, OS1, OS2, RANGE)** Constructor for Parallel 2 bytes comunication with all device ports, and optional Over Sampling and Range. 
+- **AD7606_8080( DB0_DB7, RD, CS, CONVSTA, CONVSTB, BUSY, RESET, OS0, OS1, OS2, RANGE)** Constructor for Parallel byte comunication with all device ports, and optional Over Sampling and Range. 
+- **AD7606_16( DB0_DB15, RD, CS, CONVSTA, CONVSTB, BUSY, RESET, OS0, OS1, OS2, RANGE)** Constructor for Parallel 2 bytes comunication with all device ports, and optional Over Sampling and Range. 
 
 After construction the **setOversampling(x)** can be called with the number of samples in 2^x form, with limit of 6, or 64 samples.
 The function **setRange(bool)** can be used to set the limits to 5V (+/- 2.5V) with false or 10V (+/- 5V) with true.
@@ -45,8 +45,8 @@ The total time is based on this LHL with the folowing requirementes to read all 
 
 Reading the ADC is very straightforward, the **read()** function handles all in one call.
 But if you want to read less channels, like in the case of AD7606-6 or AD7606-4, or just 2 channels in serial or 1 on 8080 or 16 modes, you can use the **read()** function with 2 arguments, one for the data vector and 1 for the number o channels.
-In serial mode 1 channel give back channels 1 and 5, because they are read simultaneously.
-In 8080 or 16 modes, the channels are retrive in order, so if you want to read the 6 channel, is necessary to read all previous channels.
+In serial mode each data retrival give back 2 channels, 1 and 5, 2 and 6 ... because they are read simultaneously.
+In 8080 or 16 modes, the channels are retrive in order, so if you want to read the 6º channel, is necessary to read all previous channels.
 
 
 

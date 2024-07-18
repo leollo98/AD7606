@@ -36,6 +36,18 @@ public:
 	void setRange(bool);
 };
 
+class AD7606_ESPI : public AD7606
+{
+public:
+	AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET); // Constructor for Emulated SPI communication
+	AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int RANGE); // Constructor for Emulated SPI communication
+	AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2); // Constructor for Emulated SPI communication
+	AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2,int RANGE); // Constructor for Emulated SPI communication
+	void read(int16_t *);   // Read raw values from ADC
+	void read(int16_t *,uint8_t ); // Read raw values from ADC
+	int16_t * readAndReturn(); // Read raw values from ADC and return a array pointer
+};
+
 class AD7606_Serial : public AD7606
 {
 public:
@@ -56,6 +68,7 @@ public:
 	AD7606_8080(int D0_D7[8], int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2,int RANGE); // Constructor for parallel byte communication
 	void read(int16_t *);   // Read raw values from ADC
 	void read(int16_t *,uint8_t ); // Read raw values from ADC
+	int16_t * readAndReturn(); // Read raw values from ADC and return a array pointer
 };
 
 class AD7606_16 : public AD7606
@@ -67,5 +80,15 @@ public:
 	AD7606_16(int D0_D15[16], int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2,int RANGE); // Constructor for parallel communication
 	void read(int16_t *);   // Read raw values from ADC
 	void read(int16_t *,uint8_t ); // Read raw values from ADC
+	int16_t * readAndReturn(); // Read raw values from ADC and return a array pointer
+};
+
+class AD7606_SPI : public AD7606
+{
+public:
+	AD7606_SPI(int MISO, int SCK, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET); // Constructor for SPI communication
+	void read(int16_t *);   // Read raw values from ADC
+	void read(int16_t *,uint8_t ); // Read raw values from ADC
+	int16_t * readAndReturn(); // Read raw values from ADC and return a array pointer
 };
 #endif
