@@ -29,4 +29,7 @@ jobs:
         with:
           token: ${{ secrets.PLATFORMIO_TOKEN }}
         
-
+      - name: Github Release
+        uses: elgohr/Github-Release-Action@v5
+        with:
+          title: 1.${{ github.run_number }}.0
