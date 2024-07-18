@@ -30,6 +30,8 @@ jobs:
           token: ${{ secrets.PLATFORMIO_TOKEN }}
         
       - name: Github Release
+        env:
+          GH_TOKEN: ${{ github.token }}
         uses: elgohr/Github-Release-Action@v5
         with:
           title: 1.${{ github.run_number }}.0
