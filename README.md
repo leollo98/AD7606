@@ -76,9 +76,7 @@ The total time with Vdrive between 3.3V to 5.25V is 5µs, with Vdrive equal to 2
 
 ## Future ideas & improvements
 
-- Improve documentation
-- More examples ?
-
+- Real SPI mode
 
 
 ## Examples

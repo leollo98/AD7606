@@ -1,0 +1,16 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ '*' ]
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - name: arduino lint action
+        uses: arduino/arduino-lint-action@v1.0.1
+        with:
+          verbose: true

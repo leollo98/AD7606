@@ -65,9 +65,13 @@ void AD7606::setOversampling(uint8_t times){
 	digitalWrite(_OS2,bitRead(B100,times));
 }
 
-void AD7606::setRange(bool range){
+void AD7606::extendedRange(bool range){
 	pinMode(_RANGE,OUTPUT);
 	digitalWrite(_RANGE,range);
+}
+
+void AD7606::setRange(bool range){
+	extendedRange(range);
 }
 
 // Constructor for emulated SPI comunication

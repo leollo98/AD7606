@@ -34,6 +34,7 @@ protected:
 public:
 	void setOversampling(uint8_t);	
 	void setRange(bool);
+	void extendedRange(bool);
 };
 
 class AD7606_ESPI : public AD7606
