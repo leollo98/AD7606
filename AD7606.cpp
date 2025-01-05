@@ -90,7 +90,6 @@ AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONV
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
-	pinMode(_BUSY,OUTPUT);
 	digitalWrite(_CS, 0);
 	digitalWrite(_CONVSTA, 0);
 	digitalWrite(_CONVSTB, 0);
@@ -113,7 +112,6 @@ AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONV
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
-	pinMode(_BUSY,OUTPUT);
 	_RANGE = RANGE;
 	pinMode(_RANGE,OUTPUT);
 	digitalWrite(_CS, 0);
@@ -138,7 +136,6 @@ AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONV
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
-	pinMode(_BUSY ,OUTPUT);
 	_OS0 = OS0;
 	pinMode(_OS0,OUTPUT);
 	_OS1 = OS1;
@@ -167,7 +164,6 @@ AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONV
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
-	pinMode(_BUSY ,OUTPUT);
 	_OS0 = OS0;
 	pinMode(_OS0,OUTPUT);
 	_OS1 = OS1;
@@ -201,7 +197,6 @@ AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int 
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
-	pinMode(_BUSY,OUTPUT);
 	digitalWrite(_CS, 0);
 	digitalWrite(_CONVSTA, 0);
 	digitalWrite(_CONVSTB, 0);
@@ -227,7 +222,6 @@ AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int 
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
-	pinMode(_BUSY,OUTPUT);
 	_RANGE = RANGE;
 	pinMode(_RANGE,OUTPUT);
 	digitalWrite(_CS, 0);
@@ -255,7 +249,6 @@ AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int 
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
-	pinMode(_BUSY ,OUTPUT);
 	_OS0 = OS0;
 	pinMode(_OS0,OUTPUT);
 	_OS1 = OS1;
@@ -287,7 +280,6 @@ AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int 
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
-	pinMode(_BUSY ,OUTPUT);
 	_OS0 = OS0;
 	pinMode(_OS0,OUTPUT);
 	_OS1 = OS1;
@@ -462,16 +454,11 @@ AD7606_8080::AD7606_8080(int D0_D7[8], int RD, int CS, int CONVSTA, int CONVSTB,
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
-	pinMode(_BUSY ,OUTPUT);
 	for (uint8_t i = 0; i < 8; i++)
 	{
 		_D0_D7[i] = D0_D7[i];
 		pinMode(_D0_D7[i],OUTPUT);
 	}
-	_RD = RD;
-	pinMode(_RD,OUTPUT);
-	_BUSY = BUSY;
-	pinMode(_BUSY,OUTPUT);
 	digitalWrite(_CS, 0);
 	digitalWrite(_CONVSTA, 0);
 	digitalWrite(_CONVSTB, 0);
@@ -491,15 +478,10 @@ AD7606_8080::AD7606_8080(int D0_D7[8], int RD, int CS, int CONVSTA, int CONVSTB,
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
-	pinMode(_BUSY ,OUTPUT);
 	for (uint8_t i = 0; i < 8; i++)
 	{
 		_D0_D7[i] = D0_D7[i];
 	}
-	_RD = RD;
-	pinMode(_RD,OUTPUT);
-	_BUSY = BUSY;
-	pinMode(_BUSY,OUTPUT);
 	_RANGE = RANGE;
 	pinMode(_RANGE,OUTPUT);
 	digitalWrite(_CS, 0);
@@ -521,15 +503,10 @@ AD7606_8080::AD7606_8080(int D0_D7[8], int RD, int CS, int CONVSTA, int CONVSTB,
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
-	pinMode(_BUSY ,OUTPUT);
 	for (uint8_t i = 0; i < 8; i++)
 	{
 		_D0_D7[i] = D0_D7[i];
 	}
-	_RD = RD;
-	pinMode(_RD,OUTPUT);
-	_BUSY = BUSY;
-	pinMode(_BUSY,OUTPUT);
 	_OS0 = OS0;
 	pinMode(_OS0,OUTPUT);
 	_OS1 = OS1;
@@ -555,15 +532,10 @@ AD7606_8080::AD7606_8080(int D0_D7[8], int RD, int CS, int CONVSTA, int CONVSTB,
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
-	pinMode(_BUSY ,OUTPUT);
 	for (uint8_t i = 0; i < 8; i++)
 	{
 		_D0_D7[i] = D0_D7[i];
 	}
-	_RD = RD;
-	pinMode(_RD,OUTPUT);
-	_BUSY = BUSY;
-	pinMode(_BUSY,OUTPUT);
 	_OS0 = OS0;
 	pinMode(_OS0,OUTPUT);
 	_OS1 = OS1;
@@ -692,15 +664,10 @@ AD7606_16::AD7606_16(int D0_D15[16], int RD, int CS, int CONVSTA, int CONVSTB, i
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
-	pinMode(_BUSY ,OUTPUT);
 	for (uint8_t i = 0; i < 8; i++)
 	{
 		_D0_D15[i] = D0_D15[i];
 	}
-	_RD = RD;
-	pinMode(_RD,OUTPUT);
-	_BUSY = BUSY;
-	pinMode(_BUSY,OUTPUT);
 	digitalWrite(_CS, 0);
 	digitalWrite(_CONVSTA, 0);
 	digitalWrite(_CONVSTB, 0);
@@ -720,15 +687,10 @@ AD7606_16::AD7606_16(int D0_D15[16], int RD, int CS, int CONVSTA, int CONVSTB, i
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
-	pinMode(_BUSY ,OUTPUT);
 	for (uint8_t i = 0; i < 8; i++)
 	{
 		_D0_D15[i] = D0_D15[i];
 	}
-	_RD = RD;
-	pinMode(_RD,OUTPUT);
-	_BUSY = BUSY;
-	pinMode(_BUSY,OUTPUT);
 	_RANGE = RANGE;
 	pinMode(_RANGE,OUTPUT);
 	digitalWrite(_CS, 0);
@@ -750,15 +712,10 @@ AD7606_16::AD7606_16(int D0_D15[16], int RD, int CS, int CONVSTA, int CONVSTB, i
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
-	pinMode(_BUSY ,OUTPUT);
 	for (uint8_t i = 0; i < 8; i++)
 	{
 		_D0_D15[i] = D0_D15[i];
 	}
-	_RD = RD;
-	pinMode(_RD,OUTPUT);
-	_BUSY = BUSY;
-	pinMode(_BUSY,OUTPUT);
 	_OS0 = OS0;
 	pinMode(_OS0,OUTPUT);
 	_OS1 = OS1;
@@ -784,15 +741,10 @@ AD7606_16::AD7606_16(int D0_D15[16], int RD, int CS, int CONVSTA, int CONVSTB, i
 	_RD = RD;
 	pinMode(_RD,OUTPUT);
 	_BUSY = BUSY;
-	pinMode(_BUSY ,OUTPUT);
 	for (uint8_t i = 0; i < 8; i++)
 	{
 		_D0_D15[i] = D0_D15[i];
 	}
-	_RD = RD;
-	pinMode(_RD,OUTPUT);
-	_BUSY = BUSY;
-	pinMode(_BUSY,OUTPUT);
 	_OS0 = OS0;
 	pinMode(_OS0,OUTPUT);
 	_OS1 = OS1;
