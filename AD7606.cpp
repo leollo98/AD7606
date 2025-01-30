@@ -179,7 +179,7 @@ AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONV
 	digitalWrite(_RD, 1);
 	reset();
 };
-[[deprecated( Use AD7606_ESPI insted )]]
+[[deprecated( "Use AD7606_ESPI insted" )]]
 AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
 {
 	_RESET = RESET;
@@ -204,7 +204,7 @@ AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int 
 	digitalWrite(_RD, 1);
 	reset();
 };
-[[deprecated( Use AD7606_ESPI insted )]]
+[[deprecated( "Use AD7606_ESPI insted" )]]
 AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int RANGE)
 {
 	_RESET = RESET;
@@ -231,7 +231,7 @@ AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int 
 	digitalWrite(_RD, 1);
 	reset();
 };
-[[deprecated( Use AD7606_ESPI insted )]]
+[[deprecated( "Use AD7606_ESPI insted" )]]
 AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2)
 {
 	_RESET = RESET;
@@ -262,7 +262,7 @@ AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int 
 	digitalWrite(_RD, 1);
 	reset();
 };
-[[deprecated( Use AD7606_ESPI insted )]]
+[[deprecated( "Use AD7606_ESPI insted" )]]
 AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET,int OS0,int OS1,int OS2,int RANGE)
 {
 	_RESET = RESET;
