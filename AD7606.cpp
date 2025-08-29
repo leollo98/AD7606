@@ -358,6 +358,8 @@ void AD7606_ESPI::read(int16_t *rawDataBuffer,uint8_t times)
 	}
 	digitalWrite(_CS, 1);
 }
+
+[[deprecated]]
 int16_t * AD7606_ESPI::readAndReturn()
 {
 	int16_t rawDataBuffer[8];
@@ -640,6 +642,8 @@ void AD7606_8080::read(int16_t *rawDataBuffer,uint8_t times)
 	}
 	digitalWrite(_CS, 1);
 }
+
+[[deprecated]]
 int16_t * AD7606_8080::readAndReturn()
 {
 	int16_t rawDataBuffer[8];
@@ -861,6 +865,8 @@ void AD7606_16::read(int16_t *rawDataBuffer,uint8_t times)
 	}
 	digitalWrite(_CS, 1);
 }
+
+[[deprecated]]
 int16_t * AD7606_16::readAndReturn()
 {
 	int16_t rawDataBuffer[8];
@@ -951,7 +957,7 @@ void AD7606_SPI::read(int16_t *rawDataBuffer,uint8_t times)
 	digitalWrite(_CS, 1);
 }
 
-
+[[deprecated]]
 int16_t * AD7606_SPI::readAndReturn()
 {
 	int16_t rawDataBuffer[8];
