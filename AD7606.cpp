@@ -14,7 +14,6 @@
 
 SPIClass * vspi = NULL;
 
-// Resets the AD7606
 void AD7606::reset()
 {
 	digitalWrite(_RESET, 1);
@@ -23,7 +22,6 @@ void AD7606::reset()
 	delayMicroseconds(1);
 }
 
-// Send a pulse to 1 or more pin for 1us
 void AD7606::pulse(uint8_t pin)
 {
 	digitalWrite(pin, HIGH);
@@ -31,7 +29,7 @@ void AD7606::pulse(uint8_t pin)
 	digitalWrite(pin, LOW);
 	digitalWrite(pin, LOW);
 }
-// Send a pulse to 1 or more pin for 1us
+
 void AD7606::pulse(uint8_t pin1, uint8_t pin2)
 {
 	digitalWrite(pin1, HIGH);
@@ -39,7 +37,7 @@ void AD7606::pulse(uint8_t pin1, uint8_t pin2)
 	digitalWrite(pin1, LOW);
 	digitalWrite(pin2, LOW);
 }
-// Send a inverted pulse to 1 or more pin for 1us
+
 void AD7606::ipulse(uint8_t pin)
 {
 	digitalWrite(pin, LOW);
@@ -47,7 +45,7 @@ void AD7606::ipulse(uint8_t pin)
 	digitalWrite(pin, HIGH);
 	digitalWrite(pin, HIGH);
 }
-// Send a inverted pulse to 1 or more pin for 1us
+
 void AD7606::ipulse(uint8_t pin1, uint8_t pin2)
 {
 	digitalWrite(pin1, LOW);
@@ -70,7 +68,7 @@ void AD7606::setRange(bool range){
 	digitalWrite(_RANGE,range);
 }
 
-// Constructor for emulated SPI comunication
+
 AD7606_ESPI::AD7606_ESPI(int DB7, int DB8, int RD, int CS, int CONVSTA, int CONVSTB, int BUSY, int RESET)
 {
 	_RESET = RESET;
@@ -304,8 +302,7 @@ AD7606_Serial::AD7606_Serial(int DB7, int DB8, int RD, int CS, int CONVSTA, int 
 // rawDataBuffer is a pointer to an array of 8 16-bit integers
 void AD7606_ESPI::read(int16_t *rawDataBuffer)
 {
-	uint16_t value1 = 0;
-	uint16_t value2 = 0;
+
 	
 	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
 
@@ -319,6 +316,8 @@ void AD7606_ESPI::read(int16_t *rawDataBuffer)
 
 	for (uint8_t k = 0; k < 4; k++)
 	{
+		uint16_t value1 = 0;
+		uint16_t value2 = 0;
 		for (int8_t i = 15; i >= 0; i--)
 		{
 			ipulse(_RD);
@@ -333,8 +332,7 @@ void AD7606_ESPI::read(int16_t *rawDataBuffer)
 void AD7606_ESPI::read(int16_t *rawDataBuffer,uint8_t times)
 {
 	times > 4 ? times = 4 : times;
-	uint16_t value1 = 0;
-	uint16_t value2 = 0;
+	
 	
 	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
 
@@ -347,6 +345,8 @@ void AD7606_ESPI::read(int16_t *rawDataBuffer,uint8_t times)
 
 	for (uint8_t k = 0; k < times; k++)
 	{
+		uint16_t value1 = 0;
+		uint16_t value2 = 0;
 		for (int8_t i = 15; i >= 0; i--)
 		{
 			ipulse(_RD);
@@ -363,8 +363,6 @@ void AD7606_ESPI::read(int16_t *rawDataBuffer,uint8_t times)
 int16_t * AD7606_ESPI::readAndReturn()
 {
 	int16_t rawDataBuffer[8];
-	uint16_t value1 = 0;
-	uint16_t value2 = 0;
 	
 	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
 
@@ -377,6 +375,8 @@ int16_t * AD7606_ESPI::readAndReturn()
 
 	for (uint8_t k = 0; k < 4; k++)
 	{
+		uint16_t value1 = 0;
+		uint16_t value2 = 0;
 		for (int8_t i = 15; i >= 0; i--)
 		{
 			ipulse(_RD);
@@ -392,8 +392,6 @@ int16_t * AD7606_ESPI::readAndReturn()
 
 void AD7606_Serial::read(int16_t *rawDataBuffer)
 {
-	uint16_t value1 = 0;
-	uint16_t value2 = 0;
 
 	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
 
@@ -406,6 +404,8 @@ void AD7606_Serial::read(int16_t *rawDataBuffer)
 
 	for (uint8_t k = 0; k < 4; k++)
 	{
+		uint16_t value1 = 0;
+		uint16_t value2 = 0;
 		for (int8_t i = 15; i >= 0; i--)
 		{
 			ipulse(_RD);
@@ -420,8 +420,6 @@ void AD7606_Serial::read(int16_t *rawDataBuffer)
 void AD7606_Serial::read(int16_t *rawDataBuffer,uint8_t times)
 {
 	times > 4 ? times = 4 : times;
-	uint16_t value1 = 0;
-	uint16_t value2 = 0;
 
 	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
 
@@ -434,6 +432,8 @@ void AD7606_Serial::read(int16_t *rawDataBuffer,uint8_t times)
 
 	for (uint8_t k = 0; k < times; k++)
 	{
+		uint16_t value1 = 0;
+		uint16_t value2 = 0;
 		for (int8_t i = 15; i >= 0; i--)
 		{
 			ipulse(_RD);
@@ -581,8 +581,6 @@ AD7606_8080::AD7606_8080(int D0_D7[8], int RD, int CS, int CONVSTA, int CONVSTB,
 // rawDataBuffer is a pointer to an array of 8 16-bit integers
 void AD7606_8080::read(int16_t *rawDataBuffer)
 {
-	uint16_t value1 = 0;
-	
 	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
 
 	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
@@ -594,6 +592,7 @@ void AD7606_8080::read(int16_t *rawDataBuffer)
 
 	for (uint8_t k = 0; k < 8; k++)
 	{
+		uint16_t value1 = 0;
 		for (uint8_t i = 0; i < 2; i++)
 		{
 			ipulse(_RD);
@@ -613,7 +612,6 @@ void AD7606_8080::read(int16_t *rawDataBuffer)
 void AD7606_8080::read(int16_t *rawDataBuffer,uint8_t times)
 {
 	times > 8 ? times = 8 : times;
-	uint16_t value1 = 0;
 
 	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
 	
@@ -626,6 +624,7 @@ void AD7606_8080::read(int16_t *rawDataBuffer,uint8_t times)
 
 	for (uint8_t k = 0; k < times; k++)
 	{
+		uint16_t value1 = 0;
 		for (uint8_t i = 0; i < 2; i++)
 		{
 			ipulse(_RD);
@@ -647,7 +646,6 @@ void AD7606_8080::read(int16_t *rawDataBuffer,uint8_t times)
 int16_t * AD7606_8080::readAndReturn()
 {
 	int16_t rawDataBuffer[8];
-	uint16_t value1 = 0;
 	
 	digitalWrite(_CS, 0); // Enable DOUTA/DOUTB lines and shift-out the conversion results
 
@@ -660,6 +658,7 @@ int16_t * AD7606_8080::readAndReturn()
 
 	for (uint8_t k = 0; k < 8; k++)
 	{
+		uint16_t value1 = 0;
 		for (uint8_t i = 0; i < 2; i++)
 		{
 			ipulse(_RD);
@@ -812,8 +811,6 @@ AD7606_16::AD7606_16(int D0_D15[16], int RD, int CS, int CONVSTA, int CONVSTB, i
 // rawDataBuffer is a pointer to an array of 8 16-bit integers
 void AD7606_16::read(int16_t *rawDataBuffer)
 {
-	uint16_t value1 = 0;
-	
 	digitalWrite(_CS, 0);
 
 	pulse(_CONVSTA, _CONVSTB); // Pulse CONVSTA/CONVSTB to start conversion
@@ -825,6 +822,7 @@ void AD7606_16::read(int16_t *rawDataBuffer)
 
 	for (uint8_t k = 0; k < 8; k++)
 	{
+		uint16_t value1 = 0;
 		for (uint8_t i = 0; i < 2; i++)
 		{
 			ipulse(_RD);
@@ -840,7 +838,6 @@ void AD7606_16::read(int16_t *rawDataBuffer)
 void AD7606_16::read(int16_t *rawDataBuffer,uint8_t times)
 {
 	times > 8 ? times = 8 : times;
-	uint16_t value1 = 0;
 	
 	digitalWrite(_CS, 0);
 
@@ -853,6 +850,7 @@ void AD7606_16::read(int16_t *rawDataBuffer,uint8_t times)
 
 	for (uint8_t k = 0; k < times; k++)
 	{
+		uint16_t value1 = 0;
 		for (uint8_t i = 0; i < 2; i++)
 		{
 			ipulse(_RD);
@@ -870,7 +868,6 @@ void AD7606_16::read(int16_t *rawDataBuffer,uint8_t times)
 int16_t * AD7606_16::readAndReturn()
 {
 	int16_t rawDataBuffer[8];
-	uint16_t value1 = 0;
 	
 	digitalWrite(_CS, 0);
 
@@ -883,6 +880,7 @@ int16_t * AD7606_16::readAndReturn()
 
 	for (uint8_t k = 0; k < 8; k++)
 	{
+		uint16_t value1 = 0;
 		for (uint8_t i = 0; i < 2; i++)
 		{
 			ipulse(_RD);
